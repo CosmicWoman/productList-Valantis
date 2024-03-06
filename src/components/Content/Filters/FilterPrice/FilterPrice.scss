@@ -1,0 +1,18 @@
+.filterPrice {
+    &__title {
+    }
+
+    &__range {
+        font-size: 14px;
+
+        .values {
+            display: flex;
+            justify-content: space-between;
+        }
+    ;
+
+        &_input {
+            //min-width: 20vw;
+        }
+    }
+}

@@ -23,3 +23,9 @@ export interface FiltersType {
     filterOfBrand: string,
     filterOfPrice: number,
 }
+
+export interface fieldsType {
+    field: string,
+    offset: number,
+    limit: number,
+}

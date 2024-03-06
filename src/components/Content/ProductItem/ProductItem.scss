@@ -1,0 +1,27 @@
+.productItem{
+    &__product{
+        display: flex;
+        flex-direction: column;
+        margin: 5px 5px;
+        min-height: 250px;
+        min-width: 150px;
+        background-color: rgba(128, 128, 128, 0.2);
+        border-radius: 16px;
+        padding: 10px;
+        justify-content: space-between;
+    }
+    &__photo{
+        margin-right: -10px;
+    }
+    &__title{
+        font-weight: 600;
+    }
+    &__id{
+        font-size: 12px;
+        padding-bottom: 15px;
+    }
+    &__price{
+        font-size: 18px;
+        font-weight: 600;
+    }
+}

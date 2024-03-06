@@ -7,13 +7,11 @@ interface PaginationType {
     totalPage: number,
     activePage: number,
     prev: () => void,
-    next: () => void
+    next: () => void,
+    setActivePage: (activePage: number) => void
 }
 
-const Pagination: FC<PaginationType> = ({totalPage, activePage, prev, next}) => {
-    const [pages, setPages] = useState([])
-
-
+const Pagination: FC<PaginationType> = ({totalPage, activePage, prev, next, setActivePage}) => {
     const pageArray = useMemo(() => {
         let arr = []
         let fivePages = []
@@ -43,28 +41,33 @@ const Pagination: FC<PaginationType> = ({totalPage, activePage, prev, next}) => 
         }
 
         return fivePages
-    }, [totalPage,activePage])
+    }, [totalPage, activePage])
 
 
     return (
         <div className='pagination'>
-            <div className="pagination__arrow-prev"
+            <div className="pagination__transition"
                  onClick={() => prev()}>
-                <Icons name='arrow' size='25'/>
+                <div className="pagination__transition_prev">
+                    <Icons name='arrow' size='25'/>
+                </div>
                 Prev
             </div>
-            <div className="pagination_pages">
-                <CreateList items={pageArray} renderItem={(page: number | string) =>
+            <div className="pagination__pages">
+                <CreateList items={pageArray} renderItem={(page: number) =>
                     <div key={page}
-                         className='pagination__page'>
+                         className={(page === activePage) ? 'pagination__pages_page-active' : 'pagination__pages_page'}
+                         onClick={() => setActivePage(page)}>
                         {page}
                     </div>
                 }/>
             </div>
-            <div className="pagination__arrow-next"
+            <div className="pagination__transition"
                  onClick={() => next()}>
                 Next
-                <Icons name='arrow' size='25'/>
+                <div className="pagination__transition_next">
+                    <Icons name='arrow-next' size='25'/>
+                </div>
             </div>
         </div>
     );

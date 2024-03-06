@@ -1,0 +1,12 @@
+.filtersName{
+    &__input{
+        input{
+            height: 40px;
+            min-width: 90%;
+            border: 1px solid gray;
+            border-radius: 20px;
+            padding-left: 10px;
+            font-size: 16px;
+        }
+    }
+}

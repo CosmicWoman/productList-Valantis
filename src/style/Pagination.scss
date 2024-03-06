@@ -1,9 +1,41 @@
 .pagination{
     display: flex;
-    &__arrow{
-        &_prev{}
+    justify-content: center;
+    align-items: center;
+    &__transition{
+        display: flex;
+        justify-content: center;
+        margin: 0 5px;
+        padding: 0 5px;
+        font-size: 18px;
+        border: 1px solid gray;
+        border-radius: 8px;
+        &_prev{
+            padding-right: 10px;
+        }
+        &_next{
+            padding-left: 10px;
+        }
     }
     &__pages{
-
+        .createList{
+            display: flex;
+            flex-direction: row;
+        }
+        &_page, &_page-active{
+            height: 35px;
+            width: 35px;
+            border-radius: 50%;
+            border: 1px solid gray;
+            margin-left: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &-active{
+                background-color: gray;
+                color: white;
+            }
+        }
     }
 }
+

@@ -1,0 +1,23 @@
+.filtersBrand{
+    
+    &__title{}
+    &__list{
+        display: flex;
+        flex-direction: column;
+        max-height: 30vh;
+        //max-width: 20vw;
+        overflow-y: scroll;
+        font-size: 18px;
+    }
+    &__brand{
+        display: flex;
+        &_title{
+            margin-left: 5px;
+        }
+    }
+}
+
+.createList{
+    display: flex;
+    flex-direction: column;
+}

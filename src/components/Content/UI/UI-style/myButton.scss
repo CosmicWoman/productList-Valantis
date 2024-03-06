@@ -1,0 +1,11 @@
+.myButton{
+    background-color: gray;
+    color: white;
+    font-size: 18px;
+    height: 40px;
+    width: 120px;
+    border-radius: 20px;
+    &__title{
+        line-height: 35px;
+    }
+}
