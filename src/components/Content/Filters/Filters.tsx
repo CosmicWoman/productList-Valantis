@@ -4,7 +4,7 @@ import FilterName from "./FilterName/FilterName";
 import './Filter.scss'
 import FilterPrice from "./FilterPrice/FilterPrice";
 import MyButton from "../UI/MyButton";
-import {filtersType, startFilters} from "../../../types/types";
+import {FiltersSelect, filtersType} from "../../../types/types";
 
 interface filtersSelectedType {
     priceFilter: number,
@@ -17,20 +17,23 @@ interface filtersSelectedType {
 }
 
 const Filters: FC<filtersSelectedType> = ({
-                                      priceFilter,
-                                      setPriceFilter,
-                                      searchQuery,
-                                      setSearchQuery,
-                                      filterBrands,
-                                      setFilterBrand,
-                                      setSelectedFilter
-                                  }) => {
+                                              priceFilter,
+                                              setPriceFilter,
+                                              searchQuery,
+                                              setSearchQuery,
+                                              filterBrands,
+                                              setFilterBrand,
+                                              setSelectedFilter
+                                          }) => {
+
     return (
         <div className='filters'>
             <FilterName searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
             <FilterPrice priceFilter={priceFilter} setPriceFilter={setPriceFilter}/>
             <FilterBrand filterBrands={filterBrands} setFilterBrand={setFilterBrand}/>
-            <MyButton title='Сбросить' click={() => setSelectedFilter(startFilters)}/>
+            <div className="filters__btn">
+                <MyButton title='Сбросить фильтры' click={() => setSelectedFilter(FiltersSelect)}/>
+            </div>
         </div>
     );
 };

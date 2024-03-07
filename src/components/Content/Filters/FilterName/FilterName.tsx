@@ -1,14 +1,15 @@
 import React, {FC, useState} from 'react';
 import './FilterName.scss'
 import MyButton from "../../UI/MyButton";
+import {FiltersSelect} from "../../../../types/types";
 
 interface filterNameType {
     searchQuery: string,
     setSearchQuery: (searchQuery: string) => void
 }
 
-const FilterName: FC<filterNameType> = ({searchQuery, setSearchQuery}) => {
-const [search, setSearch] = useState('')
+const FilterName: FC<filterNameType> = ({searchQuery,setSearchQuery}) => {
+
     return (
         <div className='filtersName'>
             <div className="filtersName__content">
@@ -17,13 +18,11 @@ const [search, setSearch] = useState('')
                 </div>
                 <div className="filtersName__input">
                     <input
-                    type='text'
-                    value={searchQuery}
-                    placeholder='Введите название товара...'
-                    onChange={(e) => setSearch(e.target.value.toLowerCase())}/>
-                </div>
-                <div className="filtersName__btn">
-                    <MyButton title={'Показать'} click={() => setSearchQuery(search)}/>
+                        type='text'
+                        id='search'
+                        placeholder='Введите название товара...'
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}/>
                 </div>
             </div>
         </div>

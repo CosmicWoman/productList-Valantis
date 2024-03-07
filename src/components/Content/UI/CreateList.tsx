@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../../style/createList.scss'
 
 interface CreateListProps<T> {
     items: T[],

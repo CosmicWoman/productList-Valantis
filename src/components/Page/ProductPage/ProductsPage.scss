@@ -1,0 +1,60 @@
+.productPage {
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: row;
+        margin-top: 10px;
+    }
+
+    &__filters {
+        flex: 0 1 20%;
+    }
+
+    &__items {
+        flex: 0 1 75%;
+        margin-left: 20px;
+    }
+
+    &__loading {
+        display: inline-block;
+        margin: auto;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #7983ff;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        animation: donut-spin 1.2s linear infinite;
+    }
+
+    &__pagination{
+        margin: 20px 0;
+    }
+}
+
+.product {
+    .createList {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    &__item {
+        flex: 0 1 33.333%;
+    }
+}
+
+@keyframes donut-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

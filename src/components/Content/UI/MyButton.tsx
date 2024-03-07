@@ -9,7 +9,7 @@ interface MyButtonType {
 const MyButton: FC<MyButtonType> = ({title, click}) => {
     return (
         <div className='myButton'
-             onClick={() => click}>
+             onClick={click}>
             <div className="myButton__title">
                 {title}
             </div>

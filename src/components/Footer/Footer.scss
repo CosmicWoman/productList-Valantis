@@ -1,0 +1,11 @@
+.footer{
+    height: 30px;
+    background-color: rgba(128, 128, 128, 0.1);
+    flex: 0 0 auto;
+    &__title{
+        line-height: 30px;
+        font-size: 12px;
+        box-shadow: 1px 0 5px 2px #BABABA;
+        padding-left: 10px;
+    }
+}

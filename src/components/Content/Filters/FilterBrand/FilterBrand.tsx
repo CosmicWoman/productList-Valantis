@@ -25,7 +25,7 @@ const FilterBrand: FC<filterBrandType> = ({filterBrands, setFilterBrand}) => {
                 "params": {field: 'brand'}
             }).unwrap()
             let _brands: string[] = Array.from(new Set(brands.result))
-            setBrands(_brands)
+            setBrands(_brands.slice(1).sort((a,b) => a.localeCompare(b)))
         } catch (e) {
             console.log(e)
             brandsApi()
@@ -61,9 +61,6 @@ const FilterBrand: FC<filterBrandType> = ({filterBrands, setFilterBrand}) => {
                             </div>
                         </div>
                     }/>
-                </div>
-                <div className="filtersBrand__btn-delete">
-                    <MyButton title={'Сбросить'} click={() => setFilterBrand('')}/>
                 </div>
             </div>
         </div>

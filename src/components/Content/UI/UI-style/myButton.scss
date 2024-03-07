@@ -1,10 +1,12 @@
 .myButton{
-    background-color: gray;
+    background-color: #BABABA;
     color: white;
     font-size: 18px;
     height: 40px;
-    width: 120px;
     border-radius: 20px;
+    text-align: center;
+    box-shadow: 2px 2px 2px #BABABA;
+    cursor: pointer;
     &__title{
         line-height: 35px;
     }

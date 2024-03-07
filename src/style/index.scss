@@ -1,5 +1,24 @@
-body{
+html,body{
     font-family: "Comic Sans MS";
     max-width: 1400px;
     margin: auto;
+    height: 100%;
+
+    .mainPage{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .footer{
+        flex: 0 0 auto;
+    }
+
+    .productPage{
+        flex: 1 0 auto
+    }
+}
+
+#root{
+    height: 100%;
 }
