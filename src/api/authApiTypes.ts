@@ -19,9 +19,9 @@ export interface ProductItemsType {
 }
 
 export interface FiltersType {
-    filterOfName: string,
-    filterOfBrand: string,
-    filterOfPrice: number,
+    filterOfName?: string,
+    filterOfBrand?: string,
+    filterOfPrice?: number,
 }
 
 export interface fieldsType {

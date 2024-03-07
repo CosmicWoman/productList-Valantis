@@ -1,9 +1,8 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
-import {useGetApiMutation} from "../../../../api/AuthApi";
+import React, {FC, useEffect, useState} from 'react';
 import CreateList from "../../UI/CreateList";
 import './FilterBrand.scss'
-import MyButton from "../../UI/MyButton";
 import Icons from "../../../../icons/icons";
+import {getBrands} from "../../../../api/api";
 
 interface filterBrandType {
     filterBrands: string,
@@ -12,24 +11,14 @@ interface filterBrandType {
 
 const FilterBrand: FC<filterBrandType> = ({filterBrands, setFilterBrand}) => {
     const [brands, setBrands] = useState<string[]>([])
-    const [auth] = useGetApiMutation()
 
     useEffect(() => {
         brandsApi()
     }, []);
 
-    async function brandsApi() {
-        try {
-            let brands = await auth({
-                "action": "get_fields",
-                "params": {field: 'brand'}
-            }).unwrap()
-            let _brands: string[] = Array.from(new Set(brands.result))
-            setBrands(_brands.slice(1).sort((a,b) => a.localeCompare(b)))
-        } catch (e) {
-            console.log(e)
-            brandsApi()
-        }
+    async function brandsApi(){
+        let brand = await getBrands('brand')
+        setBrands(Array.from(new Set(brand)).slice(1).sort((a,b) => a.localeCompare(b)))
     }
 
     function brandsFilter(brand: string){

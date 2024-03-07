@@ -1,8 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
 import './FilterPrice.scss'
-import {useGetApiMutation} from "../../../../api/AuthApi";
-import MyButton from "../../UI/MyButton";
-import {values} from "lodash";
 
 interface filterPriceType {
     priceFilter: number,

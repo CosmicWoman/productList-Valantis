@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useGetApiMutation} from "../../../api/AuthApi";
 import {
     filtersObjType,
     FiltersSelect,
@@ -12,6 +11,7 @@ import ProductItem from "../../Content/ProductItem/ProductItem";
 import Filters from "../../Content/Filters/Filters";
 import Pagination from "../../Pagination";
 import './ProductsPage.scss'
+import {getFilter, getIds, getItems} from "../../../api/api";
 
 const ProductsPage = () => {
     const [products, setProducts] = useState<productItemType[]>([startProduct])
@@ -20,7 +20,6 @@ const ProductsPage = () => {
     const [totalPage, setTotalPage] = useState(0)
     const [activePage, setActivePage] = useState(1)
     const [pages, setPages] = useState<number[]>([])
-    const [auth] = useGetApiMutation()
     const limit = 50
 
     useEffect(() => {
@@ -38,64 +37,33 @@ const ProductsPage = () => {
         paramsIds()
     }, [selectedFilter]);
 
-    async function idsApi() {
-        try {
-            if (selectedFilter.price === 0 && selectedFilter.product.length === 0 && selectedFilter.brand.length === 0) {
-                let idsProduct = await auth({
-                    'action': 'get_ids',
-                    'params': {'offset': limit * (activePage - 1), 'limit': 50}
-                }).unwrap()
-                // @ts-ignore
-                let _idsProduct: string[] = Array.from(new Set(idsProduct.result))
-                setIds(_idsProduct)
-            } else {
-                let idsProduct = await auth({
-                    "action": "filter",
-                    "params": Params()
-                }).unwrap()
-                let _idsProduct: string[] = Array.from(new Set(idsProduct.result))
-                setIds(_idsProduct)
-                setTotalPage(_idsProduct.length/limit)
-            }
-        } catch (error) {
-            if(error instanceof Error){
-                console.log(error.message)
-            }
-            setTimeout(() => {idsApi()}, 1500)
+    async function idsApi(){
+        if(selectedFilter.price === 0 &&
+            selectedFilter.product.length === 0 &&
+            selectedFilter.brand.length === 0) {
+            let offset = limit * (activePage - 1)
+            let ids = await getIds(offset, limit)
+            let _ids = Array.from(new Set(ids))
+            setIds(_ids)
+            setTotalPage(_ids.length/limit)
+        } else {
+            let params = Params()
+            let ids = await getFilter(params)
+            let _ids = Array.from(new Set(ids))
+            setIds(_ids)
+            setTotalPage(_ids.length/limit)
         }
     }
 
     async function productApi() {
-        try {
-            let products = await auth({
-                "action": "get_items",
-                "params": {'ids': ids}
-            }).unwrap()
-            let _products: productItemType[] = Array.from(products.result)
-            setProducts(_products)
-        } catch (error) {
-            if(error instanceof Error){
-                console.log(error.message)
-            }
-            setTimeout(() => {productApi()}, 1500)
-        }
+        let products = await getItems(ids)
+        setProducts(Array.from(products))
     }
 
     async function total() {
-        try {
-            let products = await auth({
-                "action": "get_ids",
-                "params": {}
-            }).unwrap()
-            let _products = Array.from(new Set(products.result)).length
-            setTotalPage(Math.ceil(_products / limit))
-        } catch (error) {
-            if(error instanceof Error){
-                console.log(error.message)
-            }
-            setTimeout(() => { total()}, 1500)
-        }
-
+        let pages = await getIds()
+        let _pages = Array.from(new Set(pages)).length
+        setTotalPage(Math.ceil(_pages / limit))
     }
 
     function pagesArray(){
@@ -143,7 +111,6 @@ const ProductsPage = () => {
                 }
             }
         }
-        console.log(fivePages)
         setPages(fivePages)
         return fivePages
     }

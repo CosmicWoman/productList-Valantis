@@ -1,7 +1,5 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import './FilterName.scss'
-import MyButton from "../../UI/MyButton";
-import {FiltersSelect} from "../../../../types/types";
 
 interface filterNameType {
     searchQuery: string,
