@@ -12,6 +12,7 @@ import Filters from "../../Content/Filters/Filters";
 import Pagination from "../../Pagination";
 import './ProductsPage.scss'
 import {getFilter, getIds, getItems} from "../../../api/api";
+import {ProductIdsType} from "../../../api/authApiTypes";
 
 const ProductsPage = () => {
     const [products, setProducts] = useState<productItemType[]>([startProduct])
@@ -19,12 +20,14 @@ const ProductsPage = () => {
     const [ids, setIds] = useState<string[]>([])
     const [totalPage, setTotalPage] = useState(0)
     const [activePage, setActivePage] = useState(1)
-    const [pages, setPages] = useState<number[]>([])
     const limit = 50
 
     useEffect(() => {
         idsApi()
-        pagesArray()
+    }, []);
+
+    useEffect(() => {
+        idsApi()
     }, [selectedFilter, activePage]);
 
     useEffect(() => {
@@ -41,8 +44,7 @@ const ProductsPage = () => {
         if(selectedFilter.price === 0 &&
             selectedFilter.product.length === 0 &&
             selectedFilter.brand.length === 0) {
-            let offset = limit * (activePage - 1)
-            let ids = await getIds(offset, limit)
+            let ids = await getIds(para())
             let _ids = Array.from(new Set(ids))
             setIds(_ids)
             setTotalPage(_ids.length/limit)
@@ -61,58 +63,9 @@ const ProductsPage = () => {
     }
 
     async function total() {
-        let pages = await getIds()
+        let pages = await getIds({})
         let _pages = Array.from(new Set(pages)).length
         setTotalPage(Math.ceil(_pages / limit))
-    }
-
-    function pagesArray(){
-        let arr = []
-        let fivePages = []
-
-        if (totalPage === 1) {
-            fivePages.push(totalPage)
-        } else {
-            for (let i = 0; i < totalPage; i++) {
-                arr.push(i + 1)
-            }
-
-            if (arr.length < 5) {
-                fivePages = arr
-            } else {
-                if (totalPage - activePage === 0) {
-                    for (let i = activePage - 3; i < activePage; i++) {
-                        fivePages.push(arr[i])
-                    }
-                    for (let i = 0; i <= totalPage - activePage + 1; i++) {
-                        fivePages.push(arr[i])
-                    }
-                } else
-                 if (totalPage - activePage === 1) {
-                    for (let i = activePage - 3; i <= activePage; i++) {
-                        fivePages.push(arr[i])
-                    }
-                    for (let i = 0; i < totalPage - activePage; i++) {
-                        fivePages.push(arr[i])
-                    }
-                } else if (activePage - 3 === -2) {
-                    fivePages.push(arr[arr.length - 2])
-                    fivePages.push(arr[arr.length - 1])
-                    for (let i = 0; i <= activePage + 1; i++) {
-                        fivePages.push(arr[i])
-                    }
-                } else if (activePage - 3 === -1) {
-                    fivePages.push(arr[arr.length - 1])
-                    for (let i = 0; i <= activePage + 1; i++) {
-                        fivePages.push(arr[i])
-                    }
-                } else {
-                    fivePages = arr.slice(activePage - 3, activePage + 2)
-                }
-            }
-        }
-        setPages(fivePages)
-        return fivePages
     }
 
     function prev() {
@@ -158,6 +111,18 @@ const ProductsPage = () => {
         return params
     }
 
+    function para(){
+        let params: ProductIdsType = {
+            'offset': 0,
+            'limit': limit,
+        }
+        let item = limit * (activePage - 1)
+        if(item !== 0){
+            params.offset = item
+        } else { delete params.offset}
+        return params
+    }
+
     function paramsIds() {
         if(ids.length !== 0){
             return {'ids':ids}
@@ -181,7 +146,7 @@ const ProductsPage = () => {
                                  setSelectedFilter={setSelectedFilters}/>
                     </div>
 
-                    {ids.length === 0 ?
+                    {products.length === 0 ?
                         <div className='productPage__loading'></div>
                         :
                         <div className="productPage__items product">
@@ -206,7 +171,7 @@ const ProductsPage = () => {
                                 prev={() => prev()}
                                 next={() => next()}
                                 setActivePage={setActivePage}
-                                pages={pages}
+                                totalPage={totalPage}
                     />
                 </div>
 

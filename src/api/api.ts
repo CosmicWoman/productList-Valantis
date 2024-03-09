@@ -1,14 +1,14 @@
 import axios from "axios";
 import axiosRetry from "axios-retry";
 import md5 from "md5";
-import {FiltersType, ProductItemsType} from "./authApiTypes";
+import {ProductIdsType, ProductItemsType} from "./authApiTypes";
 import {filtersObjType} from "../types/types";
 
-const startUrl = "https://api.valantis.store:41000/"
-const password = 'Valantis'
+export const startUrl = "https://api.valantis.store:41000/"
+export const password = 'Valantis'
 const stamp = new Date().toISOString().slice(0,10).replace(/-/g, '')
-const xAuth = md5(password + '_' + stamp)
-const attempts = 5
+export const xAuth = md5(password + '_' + stamp)
+const attempts = 20
 
 axiosRetry(axios, {
     retries: attempts,
@@ -20,11 +20,11 @@ const headers = {
     'Content-Type': 'application/json',
 };
 
-export const getIds = async (offset?: number, limit?: number): Promise<string[]> => {
+export const getIds = async (params: ProductIdsType): Promise<string[]> => {
     try {
         const response = await axios.post(startUrl, {
             action: "get_ids",
-            params: {"offset": offset, "limit": limit},
+            params: params,
         }, {headers});
         console.log(response.status)
         return response.data.result;
@@ -33,6 +33,7 @@ export const getIds = async (offset?: number, limit?: number): Promise<string[]>
         throw error;
     }
 };
+
 
 export const getItems = async (ids: string[]): Promise<ProductItemsType[]> => {
     try {

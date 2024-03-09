@@ -7,8 +7,8 @@ type actionType = 'filter' |  "get_ids" | "get_items" | "get_fields"
 
 
 export interface ProductIdsType {
-    offset: number,
-    limit: number
+    offset?: number | string,
+    limit?: number | string
 }
 
 export interface ProductItemsType {
