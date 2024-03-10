@@ -1,11 +1,3 @@
-export type authApiType<T= {}> = {
-    'action': actionType,
-    'params': T
-}
-
-type actionType = 'filter' |  "get_ids" | "get_items" | "get_fields"
-
-
 export interface ProductIdsType {
     offset?: number | string,
     limit?: number | string
@@ -16,16 +8,4 @@ export interface ProductItemsType {
     product: string,
     brand: string,
     price: number
-}
-
-export interface FiltersType {
-    filterOfName?: string,
-    filterOfBrand?: string,
-    filterOfPrice?: number,
-}
-
-export interface fieldsType {
-    field: string,
-    offset: number,
-    limit: number,
 }

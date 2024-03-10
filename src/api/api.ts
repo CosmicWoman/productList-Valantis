@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import axiosRetry from "axios-retry";
 import md5 from "md5";
 import {ProductIdsType, ProductItemsType} from "./authApiTypes";
@@ -6,7 +6,7 @@ import {filtersObjType} from "../types/types";
 
 export const startUrl = "https://api.valantis.store:41000/"
 export const password = 'Valantis'
-const stamp = new Date().toISOString().slice(0,10).replace(/-/g, '')
+const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '')
 export const xAuth = md5(password + '_' + stamp)
 const attempts = 20
 
@@ -25,11 +25,16 @@ export const getIds = async (params: ProductIdsType): Promise<string[]> => {
         const response = await axios.post(startUrl, {
             action: "get_ids",
             params: params,
-        }, {headers});
-        console.log(response.status)
-        return response.data.result;
+        }, {headers})
+            .then(response => {
+                return response.data.result
+            })
+            .catch((e: AxiosError) => {
+                console.log(e.message)
+                return e.message
+            })
+        return response;
     } catch (error) {
-        console.error(error);
         throw error;
     }
 };
@@ -40,23 +45,35 @@ export const getItems = async (ids: string[]): Promise<ProductItemsType[]> => {
         const response = await axios.post(startUrl, {
             action: "get_items",
             params: {ids},
-        }, {headers});
+        }, {headers})
+            .then(response => {
+                return response.data.result
+            })
+            .catch((e: AxiosError) => {
+                console.log(e.message)
+                return e.message
+            })
 
-        console.log(response.status)
-        return response.data.result;
+        return response;
     } catch (error) {
         console.error(error);
         throw error;
     }
 }
 
-export const getFields = async ():Promise<string[]> => {
+export const getFields = async (): Promise<string[]> => {
     try {
         const response = await axios.post(startUrl, {
             "action": "get_fields"
-        }, {headers});
-        console.log(response.status)
-        return response.data.result;
+        }, {headers})
+            .then(response => {
+                return response.data.result
+            })
+            .catch((e: AxiosError) => {
+                console.log(e.message)
+                return e.message
+            })
+        return response;
     } catch (error) {
         console.error(error);
         throw error;
@@ -77,14 +94,20 @@ export const getBrands = async (field: string, limit?: number, offset?: number):
     }
 }
 
-export const getFilter = async (params: filtersObjType):Promise<string[]> => {
+export const getFilter = async (params: filtersObjType): Promise<string[]> => {
     try {
         const response = await axios.post(startUrl, {
             "action": "filter",
             "params": params
-        }, {headers});
-        console.log(response.status)
-        return response.data.result;
+        }, {headers})
+            .then(response => {
+                return response.data.result
+            })
+            .catch((e: AxiosError) => {
+                console.log(e.message)
+                return e.message
+            })
+        return response;
     } catch (error) {
         console.error(error);
         throw error;

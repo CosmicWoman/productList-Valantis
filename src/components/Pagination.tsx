@@ -16,7 +16,7 @@ const Pagination: FC<PaginationType> = ({totalPage,activePage, prev, next, setAc
 
     useEffect(() => {
         pagesArray()
-    }, [totalPage, activePage])
+    }, [activePage])
 
     function pagesArray(){
         let arr = []

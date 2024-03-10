@@ -28,6 +28,7 @@ const ProductsPage = () => {
 
     useEffect(() => {
         idsApi()
+        total()
     }, [selectedFilter, activePage]);
 
     useEffect(() => {
@@ -35,7 +36,6 @@ const ProductsPage = () => {
     }, [ids]);
 
     useEffect(() => {
-        total()
         Params()
         paramsIds()
     }, [selectedFilter]);
@@ -47,13 +47,11 @@ const ProductsPage = () => {
             let ids = await getIds(para())
             let _ids = Array.from(new Set(ids))
             setIds(_ids)
-            setTotalPage(_ids.length/limit)
         } else {
             let params = Params()
             let ids = await getFilter(params)
             let _ids = Array.from(new Set(ids))
             setIds(_ids)
-            setTotalPage(_ids.length/limit)
         }
     }
 
